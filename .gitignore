@@ -1,0 +1,70 @@
+# Python-specific
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+env/
+venv/
+.venv/
+pip-log.txt
+pip-delete-this-directory.txt
+.tox/
+.coverage
+.coverage.*
+.cache
+nosetests.xml
+coverage.xml
+*.cover
+.hypothesis/
+.pytest_cache/
+
+# Environment variables and secrets
+.env
+.env.local
+.env.production
+.env.staging
+
+# Machine Learning / Data Science specific
+backend/data/
+backend/models/
+*.log
+logs/
+temp/
+tmp/
+*.tmp
+
+# IDE and editor files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS-specific files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Database files (if any local databases)
+*.db
+*.sqlite
+*.sqlite3
+
+# Node.js (if you add build tools later, though not currently present)
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Jupyter Notebook checkpoints (if used)
+.ipynb_checkpoints/
+
+# Build and distribution
+build/
+dist/
+*.egg-info/
