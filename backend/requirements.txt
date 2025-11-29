@@ -1,0 +1,7 @@
+Flask
+torch
+transformers
+pandas
+scikit-learn
+pytest
+pymongo
