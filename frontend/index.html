@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NiaSafe Dashboard</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#6366f1', // Indigo
+                        secondary: '#ef4444', // Red
+                        neutral: '#6b7280' // Gray
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-gray-100 dark:bg-gray-900 text-gray-900 dark:text-gray-100 min-h-screen">
+    <header class="bg-primary text-white p-4 shadow-md">
+        <div class="container mx-auto flex justify-between items-center">
+            <h1 class="text-xl font-bold">NiaSafe</h1>
+            <nav aria-label="Main navigation">
+                <ul class="hidden md:flex space-x-4">
+                    <li><a href="#" class="hover:underline">Dashboard</a></li>
+                    <li><a href="#" class="hover:underline">Reports</a></li>
+                    <li><a href="#" class="hover:underline">Alerts</a></li>
+                </ul>
+            </nav>
+            <button id="hamburger" class="md:hidden text-white" aria-label="Toggle sidebar menu">☰</button>
+        </div>
+    </header>
+
+    <div class="flex">
+        <aside id="sidebar" class="bg-gray-200 dark:bg-gray-800 p-4 w-full md:w-64 md:block hidden" aria-label="Sidebar filters">
+            <h2 class="text-lg font-semibold mb-4 text-gray-900 dark:text-gray-100">Quick Filters</h2>
+            <ul class="space-y-2">
+                <li><a href="#" class="block p-2 hover:bg-gray-300 dark:hover:bg-gray-700 rounded">View flagged comments</a></li>
+                <li><a href="#" class="block p-2 hover:bg-gray-300 dark:hover:bg-gray-700 rounded">Severity levels</a></li>
+            </ul>
+        </aside>
+
+        <main class="flex-1 p-4">
+            <section class="mb-8">
+                <h2 class="text-2xl font-bold mb-4">Flagged Comments</h2>
+                <div class="overflow-x-auto">
+                    <table class="w-full table-auto bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-700 rounded-lg shadow">
+                        <thead class="bg-gray-50 dark:bg-gray-700">
+                            <tr>
+                                <th class="p-4 text-left font-semibold">Comment text</th>
+                                <th class="p-4 text-left font-semibold">Severity score</th>
+                                <th class="p-4 text-left font-semibold">Category</th>
+                                <th class="p-4 text-left font-semibold">Timestamp</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr class="border-t border-gray-200 dark:border-gray-600 hover:bg-gray-50 dark:hover:bg-gray-700 even:bg-gray-50 dark:even:bg-gray-800">
+                                <td class="p-4">"I'm going to find you and..."</td>
+                                <td class="p-4">0.95</td>
+                                <td class="p-4">Threat</td>
+                                <td class="p-4">2023-10-27 14:30</td>
+                            </tr>
+                            <tr class="border-t border-gray-200 dark:border-gray-600 hover:bg-gray-50 dark:hover:bg-gray-700 even:bg-gray-50 dark:even:bg-gray-800">
+                                <td class="p-4">"You are completely useless."</td>
+                                <td class="p-4">0.70</td>
+                                <td class="p-4">Insult</td>
+                                <td class="p-4">2023-10-27 12:15</td>
+                            </tr>
+                            <tr class="border-t border-gray-200 dark:border-gray-600 hover:bg-gray-50 dark:hover:bg-gray-700 even:bg-gray-50 dark:even:bg-gray-800">
+                                <td class="p-4">"This is hate speech and should not be allowed."</td>
+                                <td class="p-4">0.85</td>
+                                <td class="p-4">Hate Speech</td>
+                                <td class="p-4">2023-10-26 18:45</td>
+                            </tr>
+                            <tr class="border-t border-gray-200 dark:border-gray-600 hover:bg-gray-50 dark:hover:bg-gray-700 even:bg-gray-50 dark:even:bg-gray-800">
+                                <td class="p-4">"This is just spam, please remove it."</td>
+                                <td class="p-4">0.30</td>
+                                <td class="p-4">Spam</td>
+                                <td class="p-4">2023-10-26 09:00</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <section class="mb-8">
+                <h2 class="text-2xl font-bold mb-4">Charts</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div class="bg-white dark:bg-gray-800 p-4 rounded-lg shadow">
+                        <h3 class="text-lg font-semibold mb-2">Severity Distribution</h3>
+                        <canvas id="severityChart" width="400" height="200"></canvas>
+                    </div>
+                    <div class="bg-white dark:bg-gray-800 p-4 rounded-lg shadow">
+                        <h3 class="text-lg font-semibold mb-2">Trends Over Time</h3>
+                        <canvas id="trendsChart" width="400" height="200"></canvas>
+                    </div>
+                </div>
+            </section>
+
+            <section>
+                <h2 class="text-2xl font-bold mb-4">Alerts</h2>
+                <div class="space-y-4">
+                    <div class="alert bg-red-100 dark:bg-red-900 border-l-4 border-red-500 p-4 rounded-r-lg">
+                        <div class="flex items-start">
+                            <div class="flex-shrink-0">
+                                <span class="text-red-500">⚠️</span>
+                            </div>
+                            <div class="ml-3">
+                                <h3 class="font-semibold text-red-800 dark:text-red-200">High-Severity Threat Detected</h3>
+                                <p class="text-red-700 dark:text-red-300">A comment with credible threat language was flagged. Immediate review required.</p>
+                                <span class="text-xs text-red-600 dark:text-red-400">2 minutes ago</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="alert bg-yellow-100 dark:bg-yellow-900 border-l-4 border-yellow-500 p-4 rounded-r-lg">
+                        <div class="flex items-start">
+                            <div class="flex-shrink-0">
+                                <span class="text-yellow-500">⚠️</span>
+                            </div>
+                            <div class="ml-3">
+                                <h3 class="font-semibold text-yellow-800 dark:text-yellow-200">Warning: Abusive Language Spike</h3>
+                                <p class="text-yellow-700 dark:text-yellow-300">A 30% increase in comments flagged as insults has been detected in the last hour.</p>
+                                <span class="text-xs text-yellow-600 dark:text-yellow-400">15 minutes ago</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="alert bg-red-100 dark:bg-red-900 border-l-4 border-red-500 p-4 rounded-r-lg">
+                        <div class="flex items-start">
+                            <div class="flex-shrink-0">
+                                <span class="text-red-500">⚠️</span>
+                            </div>
+                            <div class="ml-3">
+                                <h3 class="font-semibold text-red-800 dark:text-red-200">Critical Hate Speech Incident</h3>
+                                <p class="text-red-700 dark:text-red-300">A user has posted multiple comments classified as hate speech. Review user activity.</p>
+                                <span class="text-xs text-red-600 dark:text-red-400">45 minutes ago</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <script src="js/charts.js"></script>
+    <script src="js/alerts.js"></script>
+    <script>
+        // Toggle sidebar on mobile
+        document.getElementById('hamburger').addEventListener('click', function() {
+            const sidebar = document.getElementById('sidebar');
+            sidebar.classList.toggle('hidden');
+        });
+    </script>
+</body>
+</html>
