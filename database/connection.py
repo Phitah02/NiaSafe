@@ -1,8 +1,11 @@
 from pymongo import MongoClient
+from pymongo.server_api import ServerApi
+import os
 from datetime import datetime
 
-# Establish connection to local MongoDB instance
-client = MongoClient('localhost', 27017)
+# Establish connection to cloud MongoDB
+uri = os.getenv('MONGODB_URI')
+client = MongoClient(uri, server_api=ServerApi('1'))
 
 # Create database 'niasafe'
 db = client['niasafe']
